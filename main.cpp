@@ -34,7 +34,7 @@ struct solution {
     return res;
   }
 
-  bool operator < (solution &rhs) const{
+  bool operator < (solution &rhs){
     return max_consecutive() < rhs.max_consecutive();
   }
 
