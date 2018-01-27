@@ -1,0 +1,8 @@
+numOfRectangle
+--for every rectangle:
+    num of option
+    --for every option:
+        number of session(selasa 10-12 dan kamis 10-12)
+        --for every session
+            day (monday=0, tuesday=1, ...)
+            hour(0, 1, 2, .. , 20)
