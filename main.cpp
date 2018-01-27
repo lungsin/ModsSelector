@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "solver.h"
+#include "solver_bf.h"
 using namespace std;
 
 struct solution {
@@ -9,6 +9,8 @@ struct solution {
   solution() {
     mod = vector<int>(100);
   }
+
+  solution(bitset<100> bm, vector<int> mod):bm(bm),mod(mod){}
 
   void merge(bitset<100> bm2, int mod_no) {
     for (int i = 0; i < 100; i++) {
