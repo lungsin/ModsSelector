@@ -29,12 +29,12 @@ int diry[8] = {0,1,-1,0,-1,1,-1,1};
 
 clock_t first_attempt = clock();
 inline void cek_time(){
-	clock_t cur = clock()- first_attempt;
-	cerr<<"TIME : "<<(double) cur/CLOCKS_PER_SEC<<endl;
+  clock_t cur = clock()- first_attempt;
+  cerr<<"TIME : "<<(double) cur/CLOCKS_PER_SEC<<endl;
 }
 inline void OPEN (string s) {
-	freopen ((s + ".in").c_str (), "r", stdin);
-	freopen ((s + ".out").c_str (), "w", stdout);
+  freopen ((s + ".in").c_str (), "r", stdin);
+  freopen ((s + ".out").c_str (), "w", stdout);
 }
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -57,28 +57,28 @@ solution sol;
 
 int max_size = 1e6;
 void bf(int pos) {
-	if(pos==-1){
-        ans.push(sol);
-		if(ans.size() > max_size) ans.pop();
+  if(pos==-1){
+    ans.push(sol);
+    if(ans.size() > max_size) ans.pop();
+  }
+  else{
+    solution ori = sol;
+    for(auto a : slot[pos]){
+      if( (a & sol.bm).none()){
+        sol.merge(a, pos);
+        bf(pos-1);
+        sol = ori;
+      }
     }
-    else{
-		solution ori = sol;
-		for(auto a : slot[pos]){
-			if( (a & sol.bm).none()){
-				sol.merge(a, pos);
-				bf(pos-1);
-				sol = ori;
-			}
-		}
-    }
+  }
 }
 
 void build_bf(vector<vector<timeslot> > tslot){
-	slot = tslot;
+  slot = tslot;
 }
 
 priority_queue<solution> optimal_solution(int size){
-	max_size = size;
-	bf(0);
-	return ans;
+  max_size = size;
+  bf(slot.size()-1);
+  return ans;
 }

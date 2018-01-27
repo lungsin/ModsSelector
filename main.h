@@ -39,6 +39,17 @@ struct solution {
     return max_consecutive() < rhs.max_consecutive();
   }
 
+  void print() const {
+    for (int day = 0; day < 5; day++) {
+      for (int hour = 8; hour < 22; hour++) {
+        if (bm[day*20 + hour - 8]) {
+          cout << mod[day*20 + hour - 8];
+        } else cout << '-';
+      }
+      cout << '\n';
+    }
+  }
+
 };
 
 
