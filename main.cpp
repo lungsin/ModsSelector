@@ -6,7 +6,7 @@ bitset<100> input_session() {
   int day, hour;
   cin >> day >> hour;
   bitset<100> res;
-  res[day * 20 + hour] = 1;
+  res[day * 20 + hour - 8] = 1;
   return res;
 }
 
@@ -38,5 +38,6 @@ int main() {
     res.push_back(input_mod());
   }
   build_bf(res);
+  optimal_solution(1).top().print();
   return 0;
 }
