@@ -1,48 +1,50 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 #include "solve_bf.h"
+#include "module.h"
+
 using namespace std;
+const string AY="2017-2018";
+const string sem="2";
+const int maxlength_module=20;
+int main()
+{
+ 	string s1,s2,time_table;
+	char ch;
+	int num_modules,i;
+	ifstream myfile;
+	vector <module> modules;
+	cout<<"Please type in how many modules do you have?";
+	cin>>num_modules;
+	for(i=0;i<num_modules;i++)
+	{
+		cout<<"Please type in the module code:";
+		cin>>s1;
+		s2=s1+".json";
+		myfile.open(s2.c_str());
+		if(myfile.is_open())
+		{
+			modules[i].code=s1;
+			time_table="";
+			while(myfile.eof()==0) 
+			{
+				myfile>>s2;
+				time_table+=s2;
+			}
+			modules[i]=module(time_table);
+			myfile.close();
+		}
+		else
+		{
+			cout<<"Please type in the correct the module code"<<endl;
+			i--;
+		}
+		
+	}
+	
 
-bitset<120> input_session() {
-  int day, hour;
-  cin >> day >> hour;
-  bitset<120> res;
-  res[day * 24 + hour] = 1;
-  return res;
+	
+	solve(modules);
 }
-
-bitset<120> input_choices() {
-  bitset<120> res;
-  int x;
-  cin >> x;
-  for (int i = 0; i < x; i++) {
-    res |= input_session();
-  }
-  return res;
-}
-
-vector<bitset<120>> input_mod() {
-  vector<bitset<120>> res;
-  int x;
-  cin >> x;
-  for (int i = 0; i < x; i++) {
-    res.push_back(input_choices());
-  }
-  return res;
-}
-
-int main() {
-  int n;
-  cin >> n;
-  vector<vector<bitset<120>>> res;
-  for (int i = 0; i < n; i++) {
-    res.push_back(input_mod());
-  }
-  build_bf(res);
-  auto pq = optimal_solution(10);
-  while (!pq.empty()) {
-    pq.top().print();
-    printf("\n");
-    pq.pop();
-  }
-  return 0;
-}
+	//module m;
+	//modules.push_back(m);
+	//modules.pop_back();
