@@ -47,8 +47,8 @@ typedef tree<pii, null_type, less<pii>, rb_tree_tag, tree_order_statistics_node_
 
 //end of template
 
-#include <main.h>
-#include <solve_bf.h>
+#include "main.h"
+#include "solve_bf.h"
 
 typedef bitset<100> timeslot;
 typedef vector<int> module;
