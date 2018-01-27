@@ -56,15 +56,15 @@ priority_queue<solution> ans;
 solution sol;
 
 int max_size = 1e6;
-void bt(int pos) {
+void bf(int pos) {
 	if(pos==-1){
         ans.push(sol);
 		if(ans.size() > max_size) ans.pop();
     }
     else{
 		solution ori = sol;
-		for(auto a : slot){
-			if( (a & sol_time).none()){
+		for(auto a : slot[pos]){
+			if( (a & sol.bm).none()){
 				sol.merge(a, pos);
 				bf(pos-1);
 				sol = ori;
