@@ -2,16 +2,16 @@
 #include "solve_bf.h"
 using namespace std;
 
-bitset<100> input_session() {
+bitset<120> input_session() {
   int day, hour;
   cin >> day >> hour;
-  bitset<100> res;
-  res[day * 20 + hour - 8] = 1;
+  bitset<120> res;
+  res[day * 24 + hour] = 1;
   return res;
 }
 
-bitset<100> input_choices() {
-  bitset<100> res;
+bitset<120> input_choices() {
+  bitset<120> res;
   int x;
   cin >> x;
   for (int i = 0; i < x; i++) {
@@ -20,8 +20,8 @@ bitset<100> input_choices() {
   return res;
 }
 
-vector<bitset<100>> input_mod() {
-  vector<bitset<100>> res;
+vector<bitset<120>> input_mod() {
+  vector<bitset<120>> res;
   int x;
   cin >> x;
   for (int i = 0; i < x; i++) {
@@ -33,11 +33,16 @@ vector<bitset<100>> input_mod() {
 int main() {
   int n;
   cin >> n;
-  vector<vector<bitset<100>>> res;
+  vector<vector<bitset<120>>> res;
   for (int i = 0; i < n; i++) {
     res.push_back(input_mod());
   }
   build_bf(res);
-  optimal_solution(1).top().print();
+  auto pq = optimal_solution(10);
+  while (!pq.empty()) {
+    pq.top().print();
+    printf("\n");
+    pq.pop();
+  }
   return 0;
 }
