@@ -45,33 +45,41 @@ typedef tree<pii, null_type, less<pii>, rb_tree_tag, tree_order_statistics_node_
 //find_by_order(idx) : i-th index 
 //order_of_key(val)  : val has which index
 
-#include <solver.h>
 //end of template
+
+#include <main.h>
+#include <solve_bf.h>
 
 typedef bitset<100> timeslot;
 typedef vector<int> module;
 vector<vector<timeslot> > slot;
 priority_queue<solution> ans;
+solution sol;
 
-timeslot sol_time;
-module sol_mod;
-
-int max_size;
+int max_size = 1e6;
 void bt(int pos) {
 	if(pos==-1){
-        ans.insert(solution(cur_time, mod_taken));
+        ans.push(sol);
+		if(ans.size() > max_size) ans.pop();
     }
     else{
-        
+		solution ori = sol;
 		for(auto a : slot){
-			if((a&sol_time).count())
+			if( (a & sol_time).none()){
+				sol.merge(a, pos);
+				bf(pos-1);
+				sol = ori;
+			}
 		}
     }
 }
 
-void build_bf(int recommend_size, int ){
-    
+void build_bf(vector<vector<timeslot> > tslot){
+	slot = tslot;
 }
 
-
-
+priority_queue<solution> optimal_solution(int size){
+	max_size = size;
+	bf(0);
+	return ans;
+}
