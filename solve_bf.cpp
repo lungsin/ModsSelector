@@ -1,56 +1,10 @@
 #include<bits/stdc++.h>
 #include "module.h"
-
-#define pii pair<int,int>
-#define fi first
-#define se second
-#define mp make_pair
-#define pb push_back
-#define eb emplace_back
-#define pf push_front
-#define pb2 pop_back
-#define pf2 pop_front
-#define line printf("\n")
-#define pq priority_queue
-#define rep(k,i,j) for(int k = (int)i;k<(int)j;k++)
-#define repd(k,i,j) for(int k = (int)i;k>=(int)j;k--)
-#define ll long long
-#define ALL(a) a.begin(),a.end()
-#define vi vector<int>
+#include "main.h"
 
 using namespace std;
 
-double EPS = 1e-9;
-int INF = 1e9+7;;
-long long INFLL = 1e17;
-double pi = acos(-1);
-int dirx[8] = {-1,0,0,1,-1,-1,1,1};
-int diry[8] = {0,1,-1,0,-1,1,-1,1};
-
-clock_t first_attempt = clock();
-inline void cek_time(){
-  clock_t cur = clock()- first_attempt;
-  cerr<<"TIME : "<<(double) cur/CLOCKS_PER_SEC<<endl;
-}
-inline void OPEN (string s) {
-  freopen ((s + ".in").c_str (), "r", stdin);
-  freopen ((s + ".out").c_str (), "w", stdout);
-}
-
-#include<ext/pb_ds/assoc_container.hpp>
-#include<ext/pb_ds/tree_policy.hpp>
-
-using namespace __gnu_pbds;
-typedef tree<pii, null_type, less<pii>, rb_tree_tag, tree_order_statistics_node_update> bbst;
-//find_by_order(idx) : i-th index 
-//order_of_key(val)  : val has which index
-
-//end of template
-
-#include "main.h"
-
-typedef bitset<120> timeslot;
-vector<vector<timeslot> > slot;
+vector<vector<bitset<bitset_sz> > > slot;
 priority_queue<solution> ans;
 solution sol;
 
@@ -61,6 +15,7 @@ void bf(int pos) {
     if(ans.size() > max_size) ans.pop();
   }
   else{
+    if (!ans.empty() && ans.top() < sol) return;
     solution ori = sol;
     for (int i = 0; i < slot[pos].size(); i++) {
       auto a = slot[pos][i];
@@ -82,8 +37,11 @@ priority_queue<solution> optimal_solution(int size){
 vector<pair<module, int> > lvl;
 
 string conv(solution s, string sem) {
+  cout << "sol: ";
+  for (int i = 0; i < bitset_sz; i++) cout << s.bm[i];
+  cout << '\n';
   vector<pair<string, group> > used;
-  for (int i = 0; i < 120; i++) {
+  for (int i = 0; i < bitset_sz; i++) {
     if (s.bm[i]) {
       auto cur = s.mod[i];
       if (lvl[cur.first].second == 0) {
@@ -131,11 +89,12 @@ vector<string> solve(vector<module> modules, string sem) {
 
   slot.clear();
   lvl.clear();
+  while(!ans.empty()) ans.pop();
 
   for (int i = 0; i < modules.size(); i++) {
     if (modules[i].lec.size()) {
       lvl.emplace_back(modules[i], 0);
-      vector<bitset<120>> cur;
+      vector<bitset<bitset_sz>> cur;
       for (int j = 0; j < modules[i].lec.size(); j++) {
         cur.push_back(modules[i].lec[j].slots);
       }
@@ -143,7 +102,7 @@ vector<string> solve(vector<module> modules, string sem) {
     }
     if (modules[i].lab.size()) {
       lvl.emplace_back(modules[i], 1);
-      vector<bitset<120>> cur;
+      vector<bitset<bitset_sz>> cur;
       for (int j = 0; j < modules[i].lab.size(); j++) {
         cur.push_back(modules[i].lab[j].slots);
       }
@@ -151,7 +110,7 @@ vector<string> solve(vector<module> modules, string sem) {
     }
     if (modules[i].sec.size()) {
       lvl.emplace_back(modules[i], 2);
-      vector<bitset<120>> cur;
+      vector<bitset<bitset_sz>> cur;
       for (int j = 0; j < modules[i].sec.size(); j++) {
         cur.push_back(modules[i].sec[j].slots);
       }
@@ -159,7 +118,7 @@ vector<string> solve(vector<module> modules, string sem) {
     }
     if (modules[i].tut.size()) {
       lvl.emplace_back(modules[i], 3);
-      vector<bitset<120>> cur;
+      vector<bitset<bitset_sz>> cur;
       for (int j = 0; j < modules[i].tut.size(); j++) {
         cur.push_back(modules[i].tut[j].slots);
       }

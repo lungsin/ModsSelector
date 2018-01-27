@@ -1,35 +1,64 @@
 #ifndef MODULE_H
 #define MODULE_H
 #include <bits/stdc++.h>
+#include "main.h"
 using namespace std;
 
 string ambilstr(string s, string lbl);
 
 struct group{
     string code;
-    bitset<120> slots;
+    bitset<bitset_sz> slots;
     string type;
 
     group(string s) {
+      string s2;
+      for (int i = 0; i < s.size(); i++) {
+        if (s[i] == '\n') {
+        } else s2 += s[i];
+      }
+      s = s2;
+      
       code = ambilstr(s, "ClassNo");
       type = ambilstr(s, "LessonType");
       string day = ambilstr(s, "DayText");
       string start = ambilstr(s, "StartTime");
       string end = ambilstr(s, "EndTime");
+      
       int startint = stoi(start)/100;
       int endint = stoi(end)/100;
       int dayint;
+      string weekText = ambilstr(s, "WeekText");
+      vector<int> weekList = split(weekText);
       if (day == "Monday") dayint = 0;
       else if (day == "Tuesday") dayint = 1;
       else if (day == "Wednesday") dayint = 2;
       else if (day == "Thursday") dayint = 3;
       else if (day == "Friday") dayint = 4;
       else {cout << "Unknown day: " << day; assert(0);}
-      for (int i = startint; i < endint; i++) {
-        slots[dayint*24 + i] = 1;
+      for(int week : weekList){
+          for (int i = startint; i < endint; i++) {
+          slots[week*24*5 + dayint*24 + i] = 1;
+        }
       }
     }
-
+    
+    vector<int> split(string s){
+      vector<int> ret; int num;
+      if(s == "Every Week")for(int i = 1;i<=13 ; i++)ret.push_back(i);
+      else if(s == "Even Week")for(int i = 2;i<=13 ; i+=2)ret.push_back(i);
+      else if(s == "Odd Week")for(int i = 1;i<=13 ; i+=2)ret.push_back(i);
+      else{
+        char separator = ',';
+        string token;
+        stringstream ss(s);
+        while(getline(ss, token, separator)) {
+          ret.push_back(stoi(token));
+        }
+      }
+      return ret;
+    }
+    
     void merge(group g) {
       slots |= g.slots;
     }
@@ -65,15 +94,19 @@ struct module {
       if (!v.empty() && v.back().code == g.code && v.back().type == g.type) {
         v.back().merge(g);
       } else {
+        v.push_back(g);
+      }
+    }
 
-        bool valid = true;
-        for (int i = 0; i < v.size(); i++) {
-          if (v[i].slots == g.slots) {
-            valid = false;
-            break;
+    void check(vector<group> &v) {
+      for (int i = 0; i < v.size(); i++) {
+        for (int j = i+1; j < v.size(); j++) {
+          if (v[i].slots == v[j].slots) {
+            swap(v[j], v.back());
+            v.pop_back();
+            j--;
           }
         }
-        if (valid) v.push_back(g);
       }
     }
 
@@ -94,6 +127,10 @@ struct module {
           assert(0);
         }
       }
+      check(sec);
+      check(tut);
+      check(lec);
+      check(lab);
     }
 };
 

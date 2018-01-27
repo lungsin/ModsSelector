@@ -1,1 +1,1 @@
-g++ main.cpp solve_bf.cpp module.cpp HTTPDownloader.cpp -lcurl -Ofast -std=c++17
+g++-7 main.cpp solve_bf.cpp module.cpp HTTPDownloader.cpp  -std=c++17 -lcurl -Ofast

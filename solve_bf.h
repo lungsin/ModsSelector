@@ -5,7 +5,7 @@
 #include "module.h"
 using namespace std;
 
-void build_bf(vector<vector<bitset<120> > > slot);
+void build_bf(vector<vector<bitset<bitset_sz> > > slot);
 priority_queue<solution> optimal_solution(int size);
 vector<string> solve(vector<module> modules, string sem);
 
