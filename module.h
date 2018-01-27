@@ -65,7 +65,15 @@ struct module {
       if (!v.empty() && v.back().code == g.code && v.back().type == g.type) {
         v.back().merge(g);
       } else {
-        v.push_back(g);
+
+        bool valid = true;
+        for (int i = 0; i < v.size(); i++) {
+          if (v[i].slots == g.slots) {
+            valid = false;
+            break;
+          }
+        }
+        if (valid) v.push_back(g);
       }
     }
 

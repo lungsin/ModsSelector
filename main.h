@@ -59,7 +59,21 @@ struct solution {
     return res;
   }
 
+  int calc() const {
+    int res = 0;
+    for (int day = 0; day < 5; day++) {
+      int cur = 0, cur2 = 0;
+      for (int hour = 0; hour < 24; hour++) {
+        cur += bm[day*24 + hour];
+        if (hour && bm[day*24 + hour] && bm[day*24 + hour-1] && mod[day*24+hour] != mod[day*24+hour-1]) cur2++;
+      }
+      res += cur*cur + cur2*2;
+    }
+    return res;
+  }
+
   bool operator < (solution rhs) const{
+    return calc() < rhs.calc();
     if (max_consecutive() != rhs.max_consecutive())
       return max_consecutive() < rhs.max_consecutive();
     if (max_in_a_day() != rhs.max_in_a_day())
