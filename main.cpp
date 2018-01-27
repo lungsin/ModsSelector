@@ -13,24 +13,25 @@ int main()
 	int num_modules,i;
 	ifstream myfile;
 	vector <module> modules;
-	cout<<"Please type in how many modules do you have?";
+	cout<<"Please type in how many modules do you have?\n>";
 	cin>>num_modules;
 	for(i=0;i<num_modules;i++)
 	{
-		cout<<"Please type in the module code:";
+		cout<<"Please type in the module code\n>";
 		cin>>s1;
 		s2=s1+".json";
 		myfile.open(s2.c_str());
 		if(myfile.is_open())
 		{
-			modules[i].code=s1;
 			time_table="";
 			while(myfile.eof()==0) 
 			{
 				myfile>>s2;
 				time_table+=s2;
 			}
-			modules[i]=module(time_table);
+			module m = module(time_table);
+			m.code=s1;
+			modules.push_back(m);
 			myfile.close();
 		}
 		else
@@ -41,9 +42,10 @@ int main()
 		
 	}
 	
-
-	
-	solve(modules);
+	auto ans = solve(modules);
+	for (auto i : ans) {
+		cout << i << '\n';
+	}
 }
 	//module m;
 	//modules.push_back(m);

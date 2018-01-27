@@ -3,15 +3,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-string get_str(string s, string lbl) {
-  int idx = s.find(lbl) + lbl.size() + 3;
-  string res;
-  while (1) {
-    if (s[idx] == '"') break;
-    res += s[idx++];
-  }
-  return res;
-}
+string ambilstr(string s, string lbl);
 
 struct group{
     string code;
@@ -19,20 +11,32 @@ struct group{
     string type;
 
     group(string s) {
-      code = get_str(s, "ClassNo");
-      type = get_str(s, "LessonType");
-      string day = get_str(s, "DayText");
-      string start = get_str(s, "StartTime");
-      string end = get_str(s, "EndTime");
+      code = ambilstr(s, "ClassNo");
+      type = ambilstr(s, "LessonType");
+      string day = ambilstr(s, "DayText");
+      string start = ambilstr(s, "StartTime");
+      string end = ambilstr(s, "EndTime");
       int startint = stoi(start)/100;
       int endint = stoi(end)/100;
-      for (int i = start; i < end; i++) {
-        slots[day*24 + i] = 1;
+      int dayint;
+      if (day == "Monday") dayint = 0;
+      else if (day == "Tuesday") dayint = 1;
+      else if (day == "Wednesday") dayint = 2;
+      else if (day == "Thursday") dayint = 3;
+      else if (day == "Friday") dayint = 4;
+      else {cout << "Unknown day: " << day; assert(0);}
+      for (int i = startint; i < endint; i++) {
+        slots[dayint*24 + i] = 1;
       }
     }
 
     void merge(group g) {
       slots |= g.slots;
+    }
+
+    bool operator < (group rhs) const{
+      if (code != rhs.code) return code < rhs.code;
+      return type < rhs.type;
     }
 
 };
@@ -67,8 +71,8 @@ struct module {
 
     module(string s) {
       vector<string> v = split(s);
-      for (auto i : v) {
-        group g = g(i);
+      for (string i : v) {
+        group g = group(i);
         if (g.type == "Sectional Teaching") {
           add(sec, g);
         } else if (g.type == "Tutorial") {

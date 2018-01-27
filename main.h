@@ -5,18 +5,18 @@ using namespace std;
 
 struct solution {
   bitset<120> bm;
-  vector<int> mod;
+  vector<pair<int, int> > mod;
 
   solution() {
-    mod = vector<int>(120);
+    mod = vector<pair<int,int> >(120);
   }
 
-  solution(bitset<120> bm, vector<int> mod):bm(bm),mod(mod){}
+  solution(bitset<120> bm, vector<pair<int,int> > mod):bm(bm),mod(mod){}
 
-  void merge(bitset<120> bm2, int mod_no) {
+  void merge(bitset<120> bm2, int mod_no, int class_no) {
     for (int i = 0; i < 120; i++) {
       if (bm2[i]) {
-        mod[i] = mod_no;
+        mod[i] = {mod_no, class_no};
         bm[i] = 1;
       }
     }
@@ -67,16 +67,16 @@ struct solution {
     return min_in_a_day() > rhs.min_in_a_day();
   }
 
-  void print() const {
-    for (int day = 0; day < 5; day++) {
-      for (int hour = 0; hour < 24; hour++) {
-        if (bm[day*24 + hour]) {
-          cout << mod[day*24 + hour];
-        } else cout << '-';
-      }
-      cout << '\n';
-    }
-  }
+  // void print() const {
+  //   for (int day = 0; day < 5; day++) {
+  //     for (int hour = 0; hour < 24; hour++) {
+  //       if (bm[day*24 + hour]) {
+  //         cout << mod[day*24 + hour];
+  //       } else cout << '-';
+  //     }
+  //     cout << '\n';
+  //   }
+  // }
 
 };
 
