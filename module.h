@@ -31,6 +31,10 @@ struct group{
       }
     }
 
+    void merge(group g) {
+      slots |= g.slots;
+    }
+
 };
 
 struct module {
@@ -54,7 +58,7 @@ struct module {
     }
 
     void add(vector<group> &v, group &g) {
-      if (!v.empty() && v.back().code == g.code) {
+      if (!v.empty() && v.back().code == g.code && v.back().type == g.type) {
         v.back().merge(g);
       } else {
         v.push_back(g);

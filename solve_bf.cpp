@@ -82,3 +82,7 @@ priority_queue<solution> optimal_solution(int size){
   bf(slot.size()-1);
   return ans;
 }
+
+vector<string> solve(vector<module> modules) {
+  
+}
