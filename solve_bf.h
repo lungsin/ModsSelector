@@ -4,7 +4,7 @@
 #include "main.h"
 using namespace std;
 
-void build_bf(vector<vector<bitset<100> > > slot);
+void build_bf(vector<vector<bitset<120> > > slot);
 priority_queue<solution> optimal_solution(int size);
 
 #endif

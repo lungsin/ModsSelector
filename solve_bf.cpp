@@ -49,7 +49,7 @@ typedef tree<pii, null_type, less<pii>, rb_tree_tag, tree_order_statistics_node_
 
 #include "main.h"
 
-typedef bitset<100> timeslot;
+typedef bitset<120> timeslot;
 typedef vector<int> module;
 vector<vector<timeslot> > slot;
 priority_queue<solution> ans;
