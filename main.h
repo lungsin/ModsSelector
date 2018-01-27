@@ -3,7 +3,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int bitset_sz = 120*14;
+const int bitset_sz = 70*13;
 
 struct solution {
   bitset<bitset_sz> bm;
@@ -26,14 +26,15 @@ struct solution {
 
   int calc() const {
     int res = 0;
-    for (int week = 1; week <= 13; week++) {
+    for (int week = 0; week < 13; week++) {
       for (int day = 0; day < 5; day++) {
         int cur = 0, cur2 = 0;
-        for (int hour = 0; hour < 24; hour++) {
-          cur += bm[week*24*5 + day*24 + hour];
-          if (hour && bm[week*24*5 + day*24 + hour] && bm[week*24*5 + day*24 + hour-1] && mod[week*24*5 + day*24+hour] != mod[week*24*5 + day*24+hour-1]) cur2++;
+        for (int hour = 0; hour < 14; hour++) {
+          int val_id = week*14*5 + day*14 + hour;
+          cur += bm[val_id];
+          if (hour && bm[val_id] && bm[val_id-1] && mod[val_id] != mod[val_id-1]) cur2++;
         }
-        res += cur*cur + cur2*2;
+        res += cur*cur + cur2*3;
       }
     }
     return res;
@@ -42,19 +43,5 @@ struct solution {
   bool operator < (solution rhs) const{
     return calc() < rhs.calc();
   }
-
-  // void print() const {
-  //   for (int day = 0; day < 5; day++) {
-  //     for (int hour = 0; hour < 24; hour++) {
-  //       if (bm[day*24 + hour]) {
-  //         cout << mod[day*24 + hour];
-  //       } else cout << '-';
-  //     }
-  //     cout << '\n';
-  //   }
-  // }
-
 };
-
-
 #endif

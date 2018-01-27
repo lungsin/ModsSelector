@@ -38,22 +38,22 @@ struct group{
       else {cout << "Unknown day: " << day; assert(0);}
       for(int week : weekList){
           for (int i = startint; i < endint; i++) {
-          slots[week*24*5 + dayint*24 + i] = 1;
+          slots[week*14*5 + dayint*14 + i - 8] = 1;
         }
       }
     }
     
     vector<int> split(string s){
       vector<int> ret; int num;
-      if(s == "Every Week")for(int i = 1;i<=13 ; i++)ret.push_back(i);
-      else if(s == "Even Week")for(int i = 2;i<=13 ; i+=2)ret.push_back(i);
-      else if(s == "Odd Week")for(int i = 1;i<=13 ; i+=2)ret.push_back(i);
+      if(s == "Every Week")for(int i = 1;i<=13 ; i++)ret.push_back(i-1);
+      else if(s == "Even Week")for(int i = 2;i<=13 ; i+=2)ret.push_back(i-1);
+      else if(s == "Odd Week")for(int i = 1;i<=13 ; i+=2)ret.push_back(i-1);
       else{
         char separator = ',';
         string token;
         stringstream ss(s);
         while(getline(ss, token, separator)) {
-          ret.push_back(stoi(token));
+          ret.push_back(stoi(token)-1);
         }
       }
       return ret;

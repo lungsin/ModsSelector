@@ -76,6 +76,49 @@ void generate() {
 	getline(cin, dummy);
 }
 
+void set_prealloc(int num) {
+	cls;
+	line;
+	cout << modules[num].lec.size() << '\n';
+	for (int i = 0; i < modules[num].lec.size(); i++) {
+		cout << i+1 << ". Lecture Group [ " << modules[num].lec[i].code << " ]\n";
+	}
+	line;
+	cout << "Set preallocation number: ";
+	int x;
+	cin >> x;
+	--x;
+	swap(modules[num].lec[0], modules[num].lec[x]);
+	modules[num].lec.erase(modules[num].lec.begin()+1, modules[num].lec.end());
+}
+
+void unset_prealloc(int num) {
+	modules[num] = add_module(modules[num].code);
+}
+void set_prealloc() {
+	cls;
+	line;
+	print_modules();
+	line;
+	cout << "Set preallocation module number: ";
+	int num;
+	cin >> num;
+	unset_prealloc(num-1);
+	set_prealloc(num-1);
+}
+
+
+void unset_prealloc() {
+	cls;
+	line;
+	print_modules();
+	line;
+	cout << "Unset preallocation module number: ";
+	int num;
+	cin >> num;
+	unset_prealloc(num-1);
+}
+
 
 int main() {
 	sem = "1";
@@ -89,8 +132,10 @@ int main() {
 		cout << "1. Add module\n";
 		cout << "2. Delete module\n";
 		cout << "3. Set semester\n";
-		cout << "4. Generate!\n";
-		cout << "5. Quit\n> ";
+		cout << "4. Set module pre-allocation\n";
+		cout << "5. Unset module pre-allocation\n\n";
+		cout << "9. Generate!\n";
+		cout << "0. Quit\n> ";
 		int cmd;
 		cin >> cmd;
 		switch(cmd) {
@@ -104,9 +149,15 @@ int main() {
 				set_semester();
 				break;
 			case 4:
-				generate();
+				set_prealloc();
 				break;
 			case 5:
+				unset_prealloc();
+				break;
+			case 9:
+				generate();
+				break;
+			case 0:
 				cout << "Goodbye!\n";
 				return 0;
 			default:

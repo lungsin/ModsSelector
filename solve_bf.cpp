@@ -37,9 +37,6 @@ priority_queue<solution> optimal_solution(int size){
 vector<pair<module, int> > lvl;
 
 string conv(solution s, string sem) {
-  cout << "sol: ";
-  for (int i = 0; i < bitset_sz; i++) cout << s.bm[i];
-  cout << '\n';
   vector<pair<string, group> > used;
   for (int i = 0; i < bitset_sz; i++) {
     if (s.bm[i]) {
