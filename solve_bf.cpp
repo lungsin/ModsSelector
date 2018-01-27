@@ -81,7 +81,7 @@ priority_queue<solution> optimal_solution(int size){
 
 vector<pair<module, int> > lvl;
 
-string conv(solution s) {
+string conv(solution s, string sem) {
   vector<pair<string, group> > used;
   for (int i = 0; i < 120; i++) {
     if (s.bm[i]) {
@@ -103,7 +103,7 @@ string conv(solution s) {
   for (auto i : used) {
     pt[i.first].insert(i.second);
   }
-  string res = "https://nusmods.com/timetable/sem-2/share?";
+  string res = "https://nusmods.com/timetable/sem-"+sem+"/share?";
   bool first = true;
   for (auto it = pt.begin(); it != pt.end(); ++it) {
     if (first) {
@@ -117,7 +117,7 @@ string conv(solution s) {
       i++;
       if (g.type == "Lecture") res += "LEC";
       else if (g.type == "Tutorial") res += "TUT";
-      else if (g.type == "Sectional Training") res += "SEC";
+      else if (g.type == "Sectional Teaching") res += "SEC";
       else if (g.type == "Laboratory") res += "LAB";
       else cout << "Unkown type: " << g.type << '\n', assert(0);
       res += ':';
@@ -127,7 +127,7 @@ string conv(solution s) {
   return res;
 }
 
-vector<string> solve(vector<module> modules) {
+vector<string> solve(vector<module> modules, string sem) {
 
   slot.clear();
   lvl.clear();
@@ -170,7 +170,7 @@ vector<string> solve(vector<module> modules) {
   auto pq = optimal_solution(5);
   vector<string> ans;
   while (!pq.empty()) {
-    ans.push_back(conv(pq.top()));
+    ans.push_back(conv(pq.top(), sem));
     pq.pop();
   }
   reverse(ans.begin(), ans.end());
