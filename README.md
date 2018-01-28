@@ -5,4 +5,5 @@ To run ModsSelector, make sure libcurl is installed
 Then run
 
 ```bash compile.sh```
-```./a.out```
+
+```./ModsSelector```
